@@ -106,6 +106,16 @@ keys = [
 		[mod], "d",
 		lazy.spawn("dmenu_run -i -b -fn 'DejaVu Sans Book-10'")
 	),
+
+	# Screenshots
+	Key(
+		["shift"], "Print",
+		lazy.spawn("xfce4-screenshooter")
+	),
+	Key(
+		[], "Print",
+		lazy.spawn("xfce4-screenshooter -f")
+	),
 ]
 
 # Define groups (key, name)
