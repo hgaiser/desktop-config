@@ -63,23 +63,49 @@ keys = [
 	),
 
 	# Spawn terminal
-	Key([mod], "Return", lazy.spawn("urxvt")),
+	Key(
+		[mod], "Return",
+		lazy.spawn("urxvt")
+	),
 
 	# Toggle between different layouts as defined below
-	Key([mod], "space", lazy.next_layout()),
+	Key(
+		[mod], "space",
+		lazy.next_layout()
+	),
 
 	# Kill current window
-	Key([mod], "q", lazy.window.kill()),
+	Key(
+		[mod], "q",
+		lazy.window.kill()
+	),
 
 	# Toggle floating status
-	Key([mod], "t", lazy.window.toggle_floating()),
+	Key(
+		[mod], "t",
+		lazy.window.toggle_floating()
+	),
 
 	# Toggle fullscreen status
-	Key([mod], "f", lazy.window.toggle_fullscreen()),
+	Key(
+		[mod], "f",
+		lazy.window.toggle_fullscreen()
+	),
 
-	Key([mod, "shift"], "q", lazy.restart()),
+	# Quit application
+	Key(
+		[mod, "shift"], "q",
+		lazy.restart()
+	),
+
+	# Quite qtile
 	#Key([mod, "control"], "q", lazy.shutdown()),
-	Key([mod], "d", lazy.spawn("dmenu_run -i -b -fn 'DejaVu Sans Book-10'")),
+
+	# Run dmenu
+	Key(
+		[mod], "d",
+		lazy.spawn("dmenu_run -i -b -fn 'DejaVu Sans Book-10'")
+	),
 ]
 
 # Define groups (key, name)
@@ -104,12 +130,18 @@ for key, name in groups_info:
 
 	# mod1 + letter of group = switch to group
 	keys.append(
-		Key([mod], key, lazy.group[name].toscreen())
+		Key(
+			[mod], key,
+			lazy.group[name].toscreen()
+		)
 	)
 
 	# mod1 + shift + letter of group = switch to & move focused window to group
 	keys.append(
-		Key([mod, "shift"], key, lazy.window.togroup(name))
+		Key(
+			[mod, "shift"], key,
+			lazy.window.togroup(name)
+		)
 	)
 
 # Define layout color settings
