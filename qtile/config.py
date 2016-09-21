@@ -89,6 +89,10 @@ keys = [
 	# Toggle fullscreen status
 	Key(
 		[mod], "f",
+		lazy.hide_show_bar()
+	),
+	Key(
+		[mod, "shift"], "f",
 		lazy.window.toggle_fullscreen()
 	),
 
