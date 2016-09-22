@@ -1,6 +1,9 @@
+import utils
+
 from libqtile.config import Key, Screen, Group, Drag, Click
 from libqtile.command import lazy
 from libqtile import layout, bar, widget, hook
+from libqtile.log_utils import logger
 
 import os
 import subprocess
@@ -197,7 +200,8 @@ separator_settings = dict(
 )
 
 # Define battery widget settings
-battery_name = "BAT1"
+battery_name = utils.find_battery_name()
+logger.info("Batter name: {}".format(battery_name))
 battery_settings   = dict(
 	battery_name   = battery_name,
 	low_percentage = 0.1,
@@ -208,44 +212,57 @@ battery_icon_settings = dict(
 	theme_path   = os.path.expanduser("~/.config/qtile/icons/battery"),
 )
 
-def get_bar():
-	return bar.Bar(
-		[
-			# Groups
-			widget.GroupBox(**group_settings),
-			widget.Sep(**separator_settings),
+def get_widgets():
+	widgets = [
+		# Groups
+		widget.GroupBox(**group_settings),
+		widget.Sep(**separator_settings),
 
-			# Current layout
-			widget.CurrentLayout(),
-			widget.Sep(**separator_settings),
+		# Current layout
+		widget.CurrentLayout(),
+		widget.Sep(**separator_settings),
 
-			# Current window
-			widget.WindowName(),
+		# Current window
+		widget.WindowName(),
 
-			# CPU usage graph
-			widget.Image(filename="~/.config/qtile/icons/cpu.png"),
-			widget.CPUGraph(**graph_settings),
-			widget.Sep(**separator_settings),
+		# CPU usage graph
+		widget.Image(filename="~/.config/qtile/icons/cpu.png"),
+		widget.CPUGraph(**graph_settings),
+		widget.Sep(**separator_settings),
 
-			# Memory usage graph
-			widget.Image(filename="~/.config/qtile/icons/memory.png"),
-			widget.MemoryGraph(**graph_settings),
-			widget.Sep(**separator_settings),
+		# Memory usage graph
+		widget.Image(filename="~/.config/qtile/icons/memory.png"),
+		widget.MemoryGraph(**graph_settings),
+		widget.Sep(**separator_settings),
 
-			# Network usage graph
-			widget.Image(filename="~/.config/qtile/icons/lan.png"),
-			widget.NetGraph(**graph_settings),
-			widget.Sep(**separator_settings),
+		# Network usage graph
+		widget.Image(filename="~/.config/qtile/icons/lan.png"),
+		widget.NetGraph(**graph_settings),
+		widget.Sep(**separator_settings),
 
-			# System tray
-			widget.Systray(),
+		# System tray
+		widget.Systray(),
+	]
+
+	if battery_name is not None:
+		widgets.extend([
 			widget.BatteryIcon(**battery_icon_settings),
 			widget.Battery(**battery_settings),
+		])
+
+	widgets.extend([
+			# System tray separator
 			widget.Sep(**separator_settings),
 
 			# Clock
 			widget.Clock(format='%Y-%m-%d  %I:%M %p'),
-		],
+	])
+
+	return widgets
+
+def get_bar():
+	return bar.Bar(
+		get_widgets(),
 		25,
 		background=["#00394d", "#104E63"],
 	)
