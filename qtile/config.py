@@ -178,7 +178,7 @@ layouts = [
 
 # Define GroupBox settings
 group_settings = dict(
-	borderwidth                = 1,
+	borderwidth                = 0,
 	highlight_method           = "block",
 	inactive                   = "#737373",
 	this_current_screen_border = "#3492B3",
