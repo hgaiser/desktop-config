@@ -305,12 +305,6 @@ focus_on_window_activation = "focus"
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
 
-# Autostart hook
-@hook.subscribe.startup_once
-def autostart():
-	autostart_script = os.path.expanduser('~/.config/qtile/autostart.sh')
-	subprocess.call([autostart_script])
-
 # Float dialog windows
 @hook.subscribe.client_new
 def floating_dialogs(window):
